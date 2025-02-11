@@ -1,3 +1,4 @@
+name: "Push image to Docker Hub on merge"
 ## On merge, run build the image and push it into Docker registry
 on:
   push:
