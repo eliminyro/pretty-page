@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
         <h1>Welcome to My Pretty Page!</h1>
         <p>This is a modern, gradient-background design with a card layout.</p>
         <p>This app was built with GitHub Actions!</p>
-        <p>This app was also pushed to Docker Hub with GitHub Actions!</p>
+        <p>No, this time this app was also pushed to Docker Hub with GitHub Actions!</p>
       </div>
     </body>
     </html>
