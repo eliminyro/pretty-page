@@ -1,15 +1,13 @@
 name: "Push image to Docker Hub on merge"
 ## On merge, run build the image and push it into Docker registry
 on:
-  push:
-    branches:
-      - master  # or any branch you want to trigger the workflow on merge
-    # Only run on merges (not direct pushes)
+  pull_request:
     types:
-      - merged
+      - closed
 
 jobs:
-  build:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
