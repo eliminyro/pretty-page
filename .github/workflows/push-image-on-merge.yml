@@ -34,5 +34,5 @@ jobs:
 
       - name: Push image to Docker Hub
         run: |
-          docker push eliminyro/pretty-page:latest
-          docker push eliminyro/$IMAGE_TAG
+          docker push ${{ secrets.DOCKER_USERNAME }}/pretty-page:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
