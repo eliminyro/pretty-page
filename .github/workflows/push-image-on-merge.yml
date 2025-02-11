@@ -16,14 +16,17 @@ jobs:
       - name: Build the Docker image
         id: build_image
         run: |
-          IMAGE_TAG="pretty-page:$(date +%s)"
-          docker buildx build . --file Dockerfile --tag $IMAGE_TAG
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV  # Save the tag as an environment variable
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/pretty-page"
+          IMAGE_TAG="$(date +%s)"
+          IMAGE="$IMAGE_NAME:$IMAGE_TAG"
+          docker buildx build . --file Dockerfile --tag $IMAGE
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV  # Save the tag as an environment variable
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV # Save the image name as an environment variable
 
       - name: Tag the image as 'latest' if build is successful
         if: success()  # This ensures the step runs only if the previous step is successful
         run: |
-          docker tag $IMAGE_TAG pretty-page:latest
+          docker tag $IMAGE pretty-page:latest
           echo "Tagged the image with 'latest'."
 
       - name: Log in to Docker Hub
@@ -34,5 +37,5 @@ jobs:
 
       - name: Push image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/pretty-page:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE
